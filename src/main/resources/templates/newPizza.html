@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="layouts/defaultTemplate"
+>
+  <head>
+    <style>
+      * {
+        font-family: Arial;
+      }
+      h1 {
+        margin-left: 2.5%;
+        margin-right: 2.5%;
+      }
+      p {
+        font-style: italic;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        align-items: center;
+      }
+    </style>
+    <script>
+      function changestate(role){
+        console.warn("Changing state for role: " + role);
+        var fields = document.getElementById("fields");
+        if (role === "chef") {
+          fields.disabled = false;
+        }
+			 else {
+        fields.disabled = true;
+      }
+    }
+    </script>
+  </head>
+  <body>
+    <div layout:fragment="content">
+      
+      <form
+      class="form"
+      action="#"
+      th:action="@{processNew}"
+      th:object="${pizza}"
+      method="post" 
+      >
+      <label th:text="${error}"></label>
+      <fieldset id="fields">
+        <div>
+            <label>Creator:</label>
+            <input type="text" th:field="*{creator}" />
+        </div>        
+        <div>
+            <label>Name:</label>
+            <input type="text" th:field="*{name}" />
+        </div>
+        <div>
+            <label>Toppings:</label>
+            <div th:each="topping : ${toppings}">
+              <input type="checkbox" th:name="toppings[]" th:value="${topping.name}"/>
+              <label th:text="${topping.name}"></label>
+            </div>
+        </div>
+          <div>
+            <td colspan="2">
+              <input type="submit" value="Save" />
+            </td>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="layouts/defaultTemplate">
+	<head>
+		
+		<style>
+			*{
+				font-family: Arial;
+			}
+			h1{
+				margin-left: 2.5%;
+				margin-right: 2.5%;
+
+			}
+			p{
+				font-style: italic;
+			}
+			table, th, td{
+				
+				border: 1px solid black;
+				border-collapse: collapse; 
+				align-items: center;
+				
+			}
+			
+		</style>
+	</head>
+		
+	<body>
+		<div layout:fragment="content">
+            <h1>Welcome to the Pizzeria! Select a page above to get started</h1>
+			</div>
+		</body>		
+</html>
