@@ -26,51 +26,58 @@ layout:decorate="layouts/defaultTemplate">
 			
 		</style>
 		<script>
-			// Function to change state based on role
-		function changestate(role){
-			console.warn("Changing state for role: " + role);
 
-			// Targeting necessary elements
+		function changestate(role){
+
+			// Elements that need to be affected by role change
 			var addBtn = document.getElementById("addBtn");
 			var editBtns = document.querySelectorAll(".toppingEdit");
 			var deleteBtns = document.querySelectorAll(".toppingDelete");
-			var roleLabel = document.getElementById("roleLabel");
-			// For "chef" role, allow editing and interaction
+
+			// if role is owner, allow for elements to be activated
 			if (role === "owner") {
-				console.warn("contenteditable set to true");
 
-				// Enable buttons and inputs
+				// Enable buttons
 				addBtn.setAttribute("href", "/toppings/new");
-				editBtns.forEach(function(button) {
-					var toppingId = button.id.split('-')[1]; // Extract the pizza ID from the button's ID
-					console.log(toppingId);
 
+				editBtns.forEach(function(button) {
+
+					// Used to get the topping ID and route to the right edit page
+					var toppingId = button.id.split('-')[1];
 					button.setAttribute("href","edit/"+toppingId);
+					
 				});
 				deleteBtns.forEach(function(button) {
-					var toppingId = button.id.split('-')[1]; // Extract the pizza ID from the button's ID
-					console.log(toppingId);
+
+					// Used to get the topping ID and delete the proper topping
+					var toppingId = button.id.split('-')[1];
 					button.setAttribute("href","delete/"+toppingId);
+
 				});
 
-				roleLabel.innerHTML = role + ". You have full access to all features on this page";
-			} else {
-				// Disable buttons and inputs for non-chef roles (like "owner")
-				console.warn("contenteditable set to false");
+				roleLabel.innerHTML = "You are a " +role + ". You have full access to all features on this page";
+			} 
+
+			// For non owner role
+			else {
 
 				// Disable buttons and inputs
-				addBtn.setAttribute("href","javascript:void(0)");				
+				addBtn.setAttribute("href","javascript:void(0)");	
+
 				editBtns.forEach(function(button) {
 					button.setAttribute("href","javascript:void(0)");
 				});
+
 				deleteBtns.forEach(function(button) {
 					button.setAttribute("href","javascript:void(0)");
 
 				});
-				roleLabel.innerHTML = role + ". You may only view this page";
+
+				roleLabel.innerHTML = "You are a " + role + ". You may only view this page";
 
 			}
 		}
+
 		</script>
 	</head>
 	
@@ -81,8 +88,6 @@ layout:decorate="layouts/defaultTemplate">
 
 			
 			<h1 align="center">Toppings</h1>
-			<label>You are currently: </label>
-			<label id="roleLabel"></label>
 			<br>
 			<a th:href="@{/toppings/new}" class="btn btn-primary" id="addBtn">Add</a>	
 			

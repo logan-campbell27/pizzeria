@@ -25,16 +25,24 @@
       }
     </style>
     <script>
+
       function changestate(role){
         console.warn("Changing state for role: " + role);
         var fields = document.getElementById("fields");
+
+        // Allows form to be edited if role requirement is met
         if (role === "owner") {
           fields.disabled = false;
+          roleLabel.innerHTML = "You are a " +role + ". You have full access to all features on this page";
         }
-			 else {
+
+        // Otherwise disables the form
+			  else {
         fields.disabled = true;
-      }
-    }
+        roleLabel.innerHTML = "You are a " + role + ". You may only view this page";
+        }
+      } 
+
     </script>
   </head>
   <body>

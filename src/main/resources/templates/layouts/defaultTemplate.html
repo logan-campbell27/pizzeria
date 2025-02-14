@@ -13,11 +13,12 @@
 	<body>
 		<div>
 			<div th:replace="layouts/commonHeader :: header">My Header</div>
-			<label>What is your role?</label>
-    <input type="radio" id="owner" name="role" value="owner">
-    <label for="owner">Owner</label><br>
-    <input type="radio" id="chef" name="role" value="chef">
-    <label for="chef">Chef</label>
+			<label id="roleLabel"></label>
+			<br>
+			<label>To change role, click a button:</label>
+			<br>
+    <input type="button" id="owner" name="role" value="owner" class="btn btn-primary">
+    <input type="button" id="chef" name="role" value="chef" class="btn btn-primary">
 	<br>
 			<section layout:fragment="content">
 				<p>My Body Contents</p>
@@ -26,19 +27,29 @@
 		</div>
 	</body>
 	<script>
+
 		// Event listeners for role-based actions
-		console.warn("hello");
-		changestate("new user");
 		document.getElementById("owner").addEventListener("click", function(){
 			var role = "owner";
 			console.warn(role);
 			changestate(role);
+			localStorage.setItem("role", "owner");
 		});
 
 		document.getElementById("chef").addEventListener("click", function(){
 			var role = "chef";
 			console.warn(role);
 			changestate(role);
+			localStorage.setItem("role", "chef");
+
 		});
+
+		// Changestate is overloaded in every page
+		// Different attributes need to be changed on each page
+		// Loads in the proper role when a page is loaded
+		var currentRole = localStorage.getItem("role");
+		changestate(currentRole);
+
+
 	</script>
 </html>

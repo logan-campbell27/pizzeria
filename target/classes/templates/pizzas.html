@@ -26,7 +26,7 @@ layout:decorate="layouts/defaultTemplate">
 			
 		</style>
 		<script>
-			// Function to change state based on role
+		// Function to change state based on role
 		function changestate(role){
 			console.warn("Changing state for role: " + role);
 
@@ -34,38 +34,48 @@ layout:decorate="layouts/defaultTemplate">
 			var addBtn = document.getElementById("addBtn");
 			var editBtns = document.querySelectorAll(".pizzaEdit");
 			var deleteBtns = document.querySelectorAll(".pizzaDelete");
-			var roleLabel = document.getElementById("roleLabel");
-			// For "chef" role, allow editing and interaction
+
+			// if role is chef, allow for elements to be activated
 			if (role === "chef") {
 				console.warn("contenteditable set to true");
 
 				// Enable buttons and inputs
 				addBtn.setAttribute("href","/pizzas/new");
+
 				editBtns.forEach(function(button) {
-					var pizzaId = button.id.split('-')[1]; // Extract the pizza ID from the button's ID
-					console.log(pizzaId);
+
+					// Used to get the topping ID and delete the proper topping
+					var pizzaId = button.id.split('-')[1]; 
 					button.setAttribute("href","edit/"+pizzaId);
+
 				});
+
 				deleteBtns.forEach(function(button) {
-					var pizzaId = button.id.split('-')[1]; // Extract the pizza ID from the button's ID
-					console.log(pizzaId);
+
+					// Used to get the topping ID and delete the proper topping
+					var pizzaId = button.id.split('-')[1]; 
 					button.setAttribute("href","delete/"+pizzaId);
+
 				});
-				roleLabel.innerHTML = role + ". You have full access to all features on this page";
+				roleLabel.innerHTML = "You are a " +role + ". You have full access to all features on this page";
 			} 
+
+			// For non chef role
 			else {
 				// Disable buttons and inputs for non-chef roles (like "owner")
 				console.warn("contenteditable set to false");
 
 				// Disable buttons and inputs
 				addBtn.setAttribute("href", "javascript:void(0)");
+
 				editBtns.forEach(function(button) {
 					button.setAttribute("href","javascript:void(0)");
 				});
+
 				deleteBtns.forEach(function(button) {
 					button.setAttribute("href","javascript:void(0)");
 				});
-				roleLabel.innerHTML = role + ". You may only view this page";
+				roleLabel.innerHTML = "You are a " + role + ". You may only view this page";
 
 			}
 		}
@@ -76,8 +86,6 @@ layout:decorate="layouts/defaultTemplate">
 		<div layout:fragment="content">
 
 			<h1 align="center">Pizzas</h1>
-			<label>You are currently: </label>
-			<label id="roleLabel"></label>
 			<br>
 			<a th:href="@{/pizzas/new}" class="btn btn-primary" id="addBtn">Add</a>	
 			
